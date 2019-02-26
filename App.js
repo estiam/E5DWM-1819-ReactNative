@@ -5,6 +5,7 @@ import ProfilePhoto from './components/ProfilePhoto';
 import StateExample from './components/StateExample';
 import AppStackNavigator from './navigation/AppStackNavigator';
 import { Root } from 'native-base';
+import A from './components/A';
 
 // https://github.com/estiam/E5DWM-1819-ReactNative
 
