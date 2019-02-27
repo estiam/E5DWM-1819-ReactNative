@@ -3,6 +3,8 @@ import { Button } from 'react-native';
 import { View, Container, Item, Content, Form, Input } from 'native-base';
 import { SSO_URL } from '../constants/constants';
 import { AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
+import { setCurrentUser } from '../redux/user/actions'
 
 class Login extends React.Component {
   constructor(props) {
@@ -25,15 +27,19 @@ class Login extends React.Component {
       return response.json();
     }).then(data => {
       if (data.sToken) {
-        await AsyncStorage.setItem('user', JSON.stringify(data));
+        this.props.setUser(data);
       }
-
-      // ////// 
-      //   const user = JSON.parse(await AsyncStorage.getItem('user'));
     });
   }
 
+  componentDidMount() {
+    if (this.props.user)
+      this.props.navigation.navigate('Home');
+  }
+
   render() {
+    if (this.props.user)
+      return this.props.navigation.navigate('Home');
     return (
       <Container>
         <Content>
@@ -54,4 +60,17 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  console.log("MSTP", state);
+  return { user: state.user }
+};
+
+const mapDispatchToProps = dispatch => (
+  {
+    setUser: user => {
+      dispatch(setCurrentUser(user));
+    }
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -6,8 +6,12 @@ import StateExample from './components/StateExample';
 import AppStackNavigator from './navigation/AppStackNavigator';
 import { Root } from 'native-base';
 import A from './components/A';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './redux';
 
-// https://github.com/estiam/E5DWM-1819-ReactNative
+
+const store = createStore(reducer);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -38,12 +42,14 @@ export default class App extends React.Component {
 
     if (fontsLoaded)
       return (
-        <Root>
-          <AppContainer />
-        </Root>
+        <Provider store={store}>
+          <Root>
+            <AppContainer />
+          </Root>
+        </Provider>
       );
-    else 
-        return <View><Text>Loading....</Text></View>
+    else
+      return <View><Text>Loading....</Text></View>
   }
 }
 
