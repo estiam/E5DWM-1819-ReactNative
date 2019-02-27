@@ -1,0 +1,1 @@
+export const SSO_URL = 'https://sso.genius.estiam.com/apiLogin';
