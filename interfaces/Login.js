@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-native';
+import { Button, Text } from 'react-native';
 import { View, Container, Item, Content, Form, Input } from 'native-base';
 import { SSO_URL } from '../constants/constants';
 import { AsyncStorage } from 'react-native';
@@ -11,7 +11,7 @@ class Login extends React.Component {
     super(props);
     this.login = this.login.bind(this);
     this.state = {
-      username: null,
+      username: 'sion.genders@estiam.com',
       password: null,
     };
   }
@@ -31,15 +31,11 @@ class Login extends React.Component {
       }
     });
   }
-
-  componentDidMount() {
-    if (this.props.user)
-      this.props.navigation.navigate('Home');
-  }
-
   render() {
-    if (this.props.user)
-      return this.props.navigation.navigate('Home');
+    if (this.props.user){
+      setTimeout(() =>this.props.navigation.navigate('Home'), 500);
+      return <Text>Connecting...</Text>
+      }
     return (
       <Container>
         <Content>

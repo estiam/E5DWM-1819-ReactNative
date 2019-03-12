@@ -3,6 +3,7 @@ import { Text, View, StatusBar, StyleSheet, Platform } from 'react-native';
 import { Container, Header, Icon, Content, Footer, Button, Left, Body, Right, Title, FooterTab } from 'native-base';
 import Planning from './Planning';
 import Groups from './Groups';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 class Home extends Component {
   constructor(props) {

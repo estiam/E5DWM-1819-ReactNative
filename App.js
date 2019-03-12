@@ -1,6 +1,6 @@
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
-import { Platform, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Platform, StyleSheet, Text, View, TextInput,PermissionsAndroid } from 'react-native';
 import ProfilePhoto from './components/ProfilePhoto';
 import StateExample from './components/StateExample';
 import AppStackNavigator from './navigation/AppStackNavigator';
@@ -9,7 +9,10 @@ import A from './components/A';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './redux';
+import { Permissions } from 'expo';
+import * as ExpoPermissions from 'expo-permissions';
 
+console.log("PERM", ExpoPermissions);
 
 const store = createStore(reducer);
 
@@ -34,6 +37,31 @@ export default class App extends React.Component {
     catch (err) {
       console.log(err);
     }
+  }
+
+  // React native pure
+  async getPermission() {
+    const granted =  await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+      title: "J'ai besoin d'accéder à la camera",
+      message: "Ici un message",
+      buttonPositive: "Ok",
+      buttonNegative: "Non",
+      buttonNeutral: "Demande moi plus tard"
+    });
+    if(granted) {
+      console.log("Granted");
+    }
+  }
+
+  // React native & Expo
+  async getPermissionExpo() {
+    const {status} = await Permissions.askAsync(Permissions.CALENDAR);
+    if(status === 'granted') {
+      console.log("Granted");
+    }
+  }
+  componentDidMount() {
+   this.getPermissionExpo();
   }
 
   render() {
